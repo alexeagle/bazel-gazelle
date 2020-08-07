@@ -1,0 +1,28 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_binary", "go_library")
+
+go_library(
+    name = "go_default_library",
+    srcs = ["main.go"],
+    importpath = "github.com/bazelbuild/bazel-gazelle/language/rosetta/internal/testdriver",
+    visibility = ["//visibility:private"],
+    deps = [
+        "//language/rosetta/proto:go_default_library",
+        "@com_github_gogo_protobuf//jsonpb:go_default_library",
+    ],
+)
+
+go_binary(
+    name = "testdriver",
+    embed = [":go_default_library"],
+    visibility = ["//language/rosetta:__subpackages__"],
+)
+
+filegroup(
+    name = "all_files",
+    testonly = True,
+    srcs = [
+        "BUILD.bazel",
+        "main.go",
+    ],
+    visibility = ["//visibility:public"],
+)

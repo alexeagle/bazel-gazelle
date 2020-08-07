@@ -25,6 +25,7 @@ filegroup(
         "update.go",
         "//language/go:all_files",
         "//language/proto:all_files",
+        "//language/rosetta:all_files",
     ],
     visibility = ["//visibility:public"],
 )

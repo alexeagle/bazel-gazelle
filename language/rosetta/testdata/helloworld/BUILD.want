@@ -1,0 +1,4 @@
+filegroup(
+    name = "helloworld",
+    srcs = ["foo.txt"],
+)

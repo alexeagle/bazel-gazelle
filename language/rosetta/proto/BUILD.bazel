@@ -1,0 +1,33 @@
+load("@rules_proto//proto:defs.bzl", "proto_library")
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+load("@io_bazel_rules_go//proto:def.bzl", "go_proto_library")
+
+proto_library(
+    name = "rosetta_protocol_proto",
+    srcs = ["rosetta_protocol.proto"],
+    visibility = ["//visibility:public"],
+)
+
+go_proto_library(
+    name = "rosetta_protocol_go_proto",
+    importpath = "github.com/bazelbuild/bazel-gazelle/language/rosetta/proto",
+    proto = ":rosetta_protocol_proto",
+    visibility = ["//visibility:public"],
+)
+
+go_library(
+    name = "go_default_library",
+    embed = [":rosetta_protocol_go_proto"],
+    importpath = "github.com/bazelbuild/bazel-gazelle/language/rosetta/proto",
+    visibility = ["//visibility:public"],
+)
+
+filegroup(
+    name = "all_files",
+    testonly = True,
+    srcs = [
+        "BUILD.bazel",
+        "rosetta_protocol.proto",
+    ],
+    visibility = ["//visibility:public"],
+)

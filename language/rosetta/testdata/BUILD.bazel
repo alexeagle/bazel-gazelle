@@ -1,0 +1,11 @@
+# gazelle:exclude testdata
+
+filegroup(
+    name = "all_files",
+    testonly = True,
+    srcs = [
+        "BUILD.bazel",
+        "//language/rosetta/testdata/helloworld:all_files",
+    ],
+    visibility = ["//visibility:public"],
+)

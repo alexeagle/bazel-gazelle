@@ -1,0 +1,51 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "go_default_library",
+    srcs = ["lang.go"],
+    data = ["//language/rosetta/internal/testdriver"],
+    importpath = "github.com/bazelbuild/bazel-gazelle/language/rosetta",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//config:go_default_library",
+        "//label:go_default_library",
+        "//language:go_default_library",
+        "//language/rosetta/proto:go_default_library",
+        "//repo:go_default_library",
+        "//resolve:go_default_library",
+        "//rule:go_default_library",
+        "@com_github_golang_protobuf//jsonpb:go_default_library_gen",
+        "@io_bazel_rules_go//go/tools/bazel:go_default_library",
+    ],
+)
+
+go_test(
+    name = "go_default_test",
+    srcs = ["generate_test.go"],
+    data = ["//language/rosetta/testdata:all_files"],
+    embed = [":go_default_library"],
+    deps = [
+        "//config:go_default_library",
+        "//language:go_default_library",
+        "//merger:go_default_library",
+        "//resolve:go_default_library",
+        "//rule:go_default_library",
+        "//testtools:go_default_library",
+        "//walk:go_default_library",
+        "@com_github_bazelbuild_buildtools//build:go_default_library",
+    ],
+)
+
+filegroup(
+    name = "all_files",
+    testonly = True,
+    srcs = [
+        "BUILD.bazel",
+        "generate_test.go",
+        "lang.go",
+        "//language/rosetta/internal:all_files",
+        "//language/rosetta/proto:all_files",
+        "//language/rosetta/testdata:all_files",
+    ],
+    visibility = ["//visibility:public"],
+)
